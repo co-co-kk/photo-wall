@@ -3,12 +3,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # 根据你的主分支名称修改
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: github-pages
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,12 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.20.0'
-
-      - name: Clear node_modules and package-lock.json
-        run: |
-          rm -rf node_modules
-          rm package-lock.json
+          node-version: '18.20.0'  # 与你的本地 Node.js 版本一致
 
       - name: Install dependencies
         run: npm install
@@ -32,5 +28,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          github_token: ${{ secrets.PERSONAL_TOKEN }}  # 使用你刚刚创建的 Secret
+          publish_dir: ./dist  # 确保路径与你的构建输出一致
