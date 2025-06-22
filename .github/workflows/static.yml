@@ -17,10 +17,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.20.0'  # 与你的本地 Node.js 版本一致
+          node-version: '18.20.0'  # 与本地一致
+
+      - name: Clear node_modules and package-lock.json
+        run: |
+          rm -rf node_modules
+          rm -rf package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --force  # 强制重新安装依赖
 
       - name: Build project
         run: npm run build
@@ -28,5 +33,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.PERSONAL_TOKEN }}  # 使用你刚刚创建的 Secret
-          publish_dir: ./dist  # 确保路径与你的构建输出一致
+          github_token: ${{ secrets.PERSONAL_TOKEN }}  # 确保已配置 Secret
+          publish_dir: ./dist
